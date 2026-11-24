@@ -1,17 +1,48 @@
-name = "k1ing"
-main = "src/index.ts"
-compatibility_date = "2026-11-01"
+name = "k1ng"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+[vars]
+AGENT_NAME = "k1ng"
+BOT_USERNAME = "k1ingAgentBot"
+IS_COORDINATOR = "true"
+GROUP_CHAT_ID = "-1004427380000"
+OWNER_ID = "1605070949"
+MODEL = "@cf/meta/llama-3.1-8b-instruct"
+
+[ai]
+binding = "AI"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "agent-db"
 database_id = "e31f08b4-7d7e-435c-b409-15dd96558d0a"
-preview_database_id = "YOUR_PREVIEW_D1_DATABASE_ID"
-migrations_dir = "migrations"
 
-[vars]
-# Model default. Bisa diganti lewat .dev.vars / wrangler secret.
-DEFAULT_PROVIDER = "gemini"
-GEMINI_MODEL = "gemini-2.5-flash"
-GROQ_MODEL = "llama-3.3-70b-versatile"
-MAX_HISTORY = "20"
+# Service binding ke agent lain. Buka komentar SETELAH worker agent tersebut ter-deploy.
+# [[services]]
+# binding = "AGENT_Z3US"
+# service = "z3us"
+
+# [[services]]
+# binding = "AGENT_A23S"
+# service = "a23s"
+
+# [[services]]
+# binding = "AGENT_H3R4"
+# service = "h3r4"
+
+# [[services]]
+# binding = "AGENT_A2TEM1S"
+# service = "a2tem1s"
+
+# [[services]]
+# binding = "AGENT_P0SEID0N"
+# service = "p0seid0n"
+
+# [[services]]
+# binding = "AGENT_H4D3S"
+# service = "h4d3s"
+
+# [[services]]
+# binding = "AGENT_AP0LL0"
+# service = "ap0ll0"

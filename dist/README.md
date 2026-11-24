@@ -1,1 +1,0 @@
-This folder contains the built output assets for the worker "k1ing" generated at 2026-11-24T13:19:46.037Z.

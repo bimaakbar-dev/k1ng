@@ -55,12 +55,32 @@ async function handleMessage(env, msg) {
 
   const clean = msg.text.replace(new RegExp('@' + mine, 'ig'), '').trim();
 
+  // /status: status dari D1 (offline jika belum di-bind)
   if (isCoordinator && /^\/status\b/i.test(clean)) {
     const lines = agents.map((a) => {
       const bound = a.id === env.AGENT_NAME || !!env['AGENT_' + a.id.toUpperCase()];
       return `• ${a.id} — ${bound ? a.status : 'offline'} (${a.role})`;
     });
     return sendMessage(env, 'Status studio:\n' + lines.join('\n'), msg.message_id);
+  }
+
+  // /ping: benar-benar menyentuh tiap agent lewat service binding
+  if (isCoordinator && /^\/ping\b/i.test(clean)) {
+    const lines = [];
+    for (const a of agents.filter((x) => x.id !== env.AGENT_NAME)) {
+      const b = env['AGENT_' + a.id.toUpperCase()];
+      let s = 'offline (belum di-bind)';
+      if (b) {
+        try {
+          const r = await b.fetch('https://agent.internal/health');
+          s = r.ok ? 'online ✅' : `error ${r.status}`;
+        } catch {
+          s = 'tidak merespons';
+        }
+      }
+      lines.push(`• ${a.id}: ${s}`);
+    }
+    return sendMessage(env, 'Ping tim:\n' + lines.join('\n'), msg.message_id);
   }
 
   await setStatus(env, 'thinking');
@@ -90,6 +110,7 @@ ${team}
 
 Aturan:
 - Jangan pernah mengaku agent "aktif" atau "siap" jika statusnya offline. Katakan terus terang bahwa agent itu belum aktif.
+- Kamu TIDAK bisa memanggil, menghubungi, atau mengaktifkan agent lewat percakapan. Satu-satunya tindakan nyata adalah mengisi "delegate". Jangan pernah berkata sudah memanggil atau menghubungi tim. Untuk cek koneksi, arahkan CEO ke perintah /ping.
 - Kamu tidak tahu sisa kuota atau limit AI. Jangan mengarang angka.
 - Delegasikan HANYA jika CEO jelas meminta pekerjaan. Sapaan, pertanyaan status, atau kata "aktifkan" bukan tugas: jawab saja dan kosongkan delegate.
 - Pilih hanya agent yang relevan. Jika agent yang tepat offline, jelaskan dan jangan alihkan ke agent lain.

@@ -30,19 +30,19 @@ service = "a23s"
 binding = "AGENT_H3R4"
 service = "h3r4"
 
-# [[services]]
-# binding = "AGENT_A2TEM1S"
-# service = "a2tem1s"
+[[services]]
+binding = "AGENT_A2TEM1S"
+service = "a2tem1s"
 
-# [[services]]
-# binding = "AGENT_P0SEID0N"
-# service = "p0seid0n"
+[[services]]
+binding = "AGENT_P0SEID0N"
+service = "p0seid0n"
 
 [[services]]
 binding = "AGENT_H4D3S"
 service = "h4d3s"
 
-# [[services]]
-# binding = "AGENT_AP0LL0"
-# service = "ap0ll0"
+[[services]]
+binding = "AGENT_AP0LL0"
+service = "ap0ll0"
 

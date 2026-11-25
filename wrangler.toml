@@ -38,9 +38,9 @@ service = "h3r4"
 # binding = "AGENT_P0SEID0N"
 # service = "p0seid0n"
 
-# [[services]]
-# binding = "AGENT_H4D3S"
-# service = "h4d3s"
+[[services]]
+binding = "AGENT_H4D3S"
+service = "h4d3s"
 
 # [[services]]
 # binding = "AGENT_AP0LL0"

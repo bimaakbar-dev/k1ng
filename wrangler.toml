@@ -9,6 +9,7 @@ IS_COORDINATOR = "true"
 GROUP_CHAT_ID = "-1004427380000"
 OWNER_ID = "1605070949"
 MODEL = "@cf/meta/llama-3.1-8b-instruct"
+DEBUG = "true"
 
 [ai]
 binding = "AI"

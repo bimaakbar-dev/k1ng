@@ -46,3 +46,6 @@ service = "h4d3s"
 binding = "AGENT_AP0LL0"
 service = "ap0ll0"
 
+[observability.logs]
+enabled = false
+invocation_logs = true

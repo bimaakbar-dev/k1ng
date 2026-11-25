@@ -116,12 +116,16 @@ async function delegate(env, d, agents) {
   return { target, title, ok };
 }
 
-// ---------- Agent menerima tugas dari k1ng ----------
 async function taskEndpoint(req, env, ctx) {
   if (req.headers.get('authorization') !== `Bearer ${env.INTERNAL_SECRET}`)
     return new Response('forbidden', { status: 403 });
   const { task_id } = await req.json();
-  ctx.waitUntil(runTask(env, task_id).catch((e) => console.error(e)));
+  ctx.waitUntil(
+    handleMessage(env, msg).catch((e) => {
+      console.error(e);
+      return sendMessage(env, '⚠ Error: ' + String(e).slice(0, 300), msg.message_id).catch(() => {});
+    })
+  );
   return json({ accepted: true }, 202);
 }
 

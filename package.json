@@ -1,24 +1,7 @@
 {
-  "name": "k1ing",
+  "name": "k1ng",
   "private": true,
-  "version": "1.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "set-webhook": "node scripts/set-webhook.mjs",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "grammy": "^1.37.0"
-  },
-  "devDependencies": {
-    "@cloudflare/workers-types": "^5.20261123.1",
-    "typescript": "^5.8.3",
-    "wrangler": "^4.0.0"
-  },
-  "allowScripts": {
-    "esbuild@0.28.2": true,
-    "workerd@1.20261123.1": true
-  }
+  "scripts": { "dev": "wrangler dev", "deploy": "wrangler deploy" },
+  "devDependencies": { "wrangler": "^4.0.0" }
 }

@@ -23,24 +23,25 @@ export async function sendMessage(env, text, replyTo) {
   if (!r.ok) console.error('telegram error', r.status, await r.text());
 }
 
+// ---------- AI: Groq -> Gemini -> Workers AI (fallback otomatis) ----------
 async function viaGroq(env, system, user) {
   const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
-    headers: { authorization: Bearer ${env.GROQ_API_KEY}, 'content-type': 'application/json' },
+    headers: { authorization: `Bearer ${env.GROQ_API_KEY}`, 'content-type': 'application/json' },
     body: JSON.stringify({
       model: env.GROQ_MODEL || 'llama-3.3-70b-versatile',
       messages: [{ role: 'system', content: system }, { role: 'user', content: user }],
       max_tokens: 900,
     }),
   });
-  if (!r.ok) throw new Error(groq ${r.status}: ${(await r.text()).slice(0, 150)});
+  if (!r.ok) throw new Error(`groq ${r.status}: ${(await r.text()).slice(0, 150)}`);
   return (await r.json()).choices?.[0]?.message?.content?.trim() || '';
 }
 
 async function viaGemini(env, system, user) {
   const model = env.GEMINI_MODEL || 'gemini-2.5-flash';
   const r = await fetch(
-    https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent,
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
     {
       method: 'POST',
       headers: { 'x-goog-api-key': env.GEMINI_API_KEY, 'content-type': 'application/json' },
@@ -51,9 +52,9 @@ async function viaGemini(env, system, user) {
       }),
     }
   );
-  if (!r.ok) throw new Error(gemini ${r.status}: ${(await r.text()).slice(0, 150)});
+  if (!r.ok) throw new Error(`gemini ${r.status}: ${(await r.text()).slice(0, 150)}`);
   const d = await r.json();
-  return (d.candidates?.[0]?.content?.parts  []).map((p) => p.text  '').join('').trim();
+  return (d.candidates?.[0]?.content?.parts || []).map((p) => p.text || '').join('').trim();
 }
 
 async function viaWorkersAI(env, system, user) {
